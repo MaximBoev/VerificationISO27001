@@ -116,191 +116,72 @@
                 }
                  
             <div class="p-5 text-white flex-grow-1">
-                @foreach (var question in Model.Questions)
+                @for (var j=0; j<Model.Questions.Count;j++)
                 {
                     <div class="accordion mb-2 accordion-flush" id="accordionExample">
                         <div class="accordion-item my-bg-color2 text-white">
-                            <h2 class="accordion-header" id="heading1">
+                            @{ var str1 = "heading" + i.ToString();}
+                            @{ var str2 = "#collapse" + i.ToString();}
+                            @{ var str3 = "collapse" + i.ToString();}
+                            @{ var str4 = "listGroupRadioGrid" + i.ToString();}
+                            <h2 class="accordion-header" id=@str1>
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
-                                    Question @question.Number
+                                        data-bs-target=@str2 aria-expanded="false" aria-controls=@str3>
+                                    Question @Model.Questions[j].Number
                                 </button>
                             </h2>
-                            <input type="number" name="Id" class="form-control" style="display: none;" value="@question.Id" readonly>
-                            <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="heading1"
+                            <input type="number" name="@($"list[{j}].Id")" class="form-control" style="display: none;" value="@Model.Questions[j].Id" readonly>
+                            <div id=@str3 class="accordion-collapse collapse" aria-labelledby=@str1
                                  data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <p>
-                                        @question.Question
-                                </p>
-                                <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
-                                    <div class="list-group list-group-radio d-flex gap-2 border-0">
+                                        @Model.Questions[j].Question
+                                    </p>
+                                    <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
+                                        <div class="list-group list-group-radio d-flex gap-2 border-0">
 
-                                        <div class="position-relative">
-                                            <input class="form-check-input position-absolute top-50 end-0 me-3 fs-5"
-                                                   type="radio" name="listGroupRadioGrid+@question.Number.ToString()" id="listGroupRadioGrid+@i.ToString()"
-                                                   value="Yes">
-                                            <label class="list-group-item py-3 pe-5 bg-white"
-                                                   for="listGroupRadioGrid+@i.ToString()">
-                                                <strong class="fw-semibold">Yes</strong>
-                                            </label>
+                                            <div class="position-relative">
+                                                <input class="form-check-input position-absolute top-50 end-0 me-3 fs-5"
+                                                       type="radio" name="@($"list[{j}].Answer")" id=@str4
+                                                       value="Yes">
+                                                <label class="list-group-item py-3 pe-5 bg-white"
+                                                       for=@str4>
+                                                    <strong class="fw-semibold">Yes</strong>
+                                                </label>
+                                            </div>
+                                            @{i++; }
+                                            @{str4 = "listGroupRadioGrid" + i.ToString();}
+                                            <div class="position-relative">
+                                                <input class="form-check-input position-absolute top-50 end-0 me-3 fs-5"
+                                                       type="radio" name="@($"list[{j}].Answer")" id=@str4
+                                                       value="No">
+                                                <label class="list-group-item py-3 pe-5 bg-white"
+                                                       for=@str4>
+                                                    <strong class="fw-semibold">No</strong>
+                                                </label>
+                                            </div>
+                                            @{i++; }
+                                            @{str4 = "listGroupRadioGrid" + i.ToString();}
+                                            <div class="position-relative">
+                                                <input class="form-check-input position-absolute top-50 end-0 me-3 fs-5"
+                                                       type="radio" name="@($"list[{j}].Answer")" id=@str4
+                                                       value="Dknow" checked>
+                                                <label class="list-group-item py-3 pe-5 bg-white"
+                                                       for=@str4>
+                                                    <strong class="fw-semibold">I don't know</strong>
+                                                </label>
+                                            </div>
+                                            @{i++; }
+                                            @{str4 = "listGroupRadioGrid" + i.ToString();}
                                         </div>
-                                        @{i++; }
-                                        <div class="position-relative">
-                                            <input class="form-check-input position-absolute top-50 end-0 me-3 fs-5"
-                                                   type="radio" name="listGroupRadioGrid+@question.Number.ToString()" id="listGroupRadioGrid+@i.ToString()"
-                                                   value="No">
-                                            <label class="list-group-item py-3 pe-5 bg-white"
-                                                   for="listGroupRadioGrid+@i.ToString()">
-                                                <strong class="fw-semibold">No</strong>
-                                            </label>
-                                        </div>
-                                        @{i++; }
-                                        <div class="position-relative">
-                                            <input class="form-check-input position-absolute top-50 end-0 me-3 fs-5"
-                                                   type="radio" name="listGroupRadioGrid+@question.Number.ToString()" id="listGroupRadioGrid+@i.ToString()"
-                                                   value="Dknow" checked>
-                                            <label class="list-group-item py-3 pe-5 bg-white"
-                                                   for="listGroupRadioGrid+@i.ToString()">
-                                                <strong class="fw-semibold">I don't know</strong>
-                                            </label>
-                                        </div>
-                                        @{i++; }
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
             }
 
 
-                @*<div class="accordion mb-2 accordion-flush" id="accordionExample">
-                    <div class="accordion-item my-bg-color2 text-white">
-                        <h2 class="accordion-header" id="heading2">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
-                                Question 2
-                            </button>
-                        </h2>
-                        <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2"
-                             data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <p>
-                                    What is the purpose of life, and how can we find it? It is shown by
-                                    default, until
-                                    the collapse plugin adds the appropriate classes that we use to style each
-                                    element.
-                                    These classes control the overall appearance, as well as the showing and hiding
-                                    via
-                                    CSS
-                                    transitions. You can modify any of this with custom CSS or overriding our
-                                    default
-                                    variables. It's also worth noting that just about any HTML can go within the
-                                    , though the transition does limit overflow.
-                                </p>
-                                <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
-                                    <div class="list-group list-group-radio d-flex gap-2 border-0">
-
-                                        <div class="position-relative">
-                                            <input class="form-check-input position-absolute top-50 end-0 me-3 fs-5"
-                                                   type="radio" name="listGroupRadioGrid2" id="listGroupRadioGrid4"
-                                                   value="Yes">
-                                            <label class="list-group-item py-3 pe-5 bg-white"
-                                                   for="listGroupRadioGrid4">
-                                                <strong class="fw-semibold">Yes</strong>
-                                            </label>
-                                        </div>
-
-                                        <div class="position-relative">
-                                            <input class="form-check-input position-absolute top-50 end-0 me-3 fs-5"
-                                                   type="radio" name="listGroupRadioGrid2" id="listGroupRadioGrid5"
-                                                   value="No">
-                                            <label class="list-group-item py-3 pe-5 bg-white"
-                                                   for="listGroupRadioGrid5">
-                                                <strong class="fw-semibold">No</strong>
-                                            </label>
-                                        </div>
-
-                                        <div class="position-relative">
-                                            <input class="form-check-input position-absolute top-50 end-0 me-3 fs-5"
-                                                   type="radio" name="listGroupRadioGrid2" id="listGroupRadioGrid6"
-                                                   value="Dknow" checked>
-                                            <label class="list-group-item py-3 pe-5 bg-white"
-                                                   for="listGroupRadioGrid6">
-                                                <strong class="fw-semibold">I don't know</strong>
-                                            </label>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion mb-2 accordion-flush" id="accordionExample">
-                    <div class="accordion-item my-bg-color2 text-white">
-                        <h2 class="accordion-header" id="heading3">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-                                Question 3
-                            </button>
-                        </h2>
-                        <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="heading3"
-                             data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <p>
-                                    What is the purpose of life, and how can we find it? It is shown by
-                                    default, until
-                                    the collapse plugin adds the appropriate classes that we use to style each
-                                    element.
-                                    These classes control the overall appearance, as well as the showing and hiding
-                                    via
-                                    CSS
-                                    transitions. You can modify any of this with custom CSS or overriding our
-                                    default
-                                    variables. It's also worth noting that just about any HTML can go within the
-                                    , though the transition does limit overflow.
-                                </p>
-                                <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
-                                    <div class="list-group list-group-radio d-flex gap-2 border-0">
-
-                                        <div class="position-relative">
-                                            <input class="form-check-input position-absolute top-50 end-0 me-3 fs-5"
-                                                   type="radio" name="listGroupRadioGrid3" id="listGroupRadioGrid7"
-                                                   value="Yes">
-                                            <label class="list-group-item py-3 pe-5 bg-white"
-                                                   for="listGroupRadioGri7">
-                                                <strong class="fw-semibold">Yes</strong>
-                                            </label>
-                                        </div>
-
-                                        <div class="position-relative">
-                                            <input class="form-check-input position-absolute top-50 end-0 me-3 fs-5"
-                                                   type="radio" name="listGroupRadioGrid3" id="listGroupRadioGrid8"
-                                                   value="No">
-                                            <label class="list-group-item py-3 pe-5 bg-white"
-                                                   for="listGroupRadioGrid8">
-                                                <strong class="fw-semibold">No</strong>
-                                            </label>
-                                        </div>
-
-                                        <div class="position-relative">
-                                            <input class="form-check-input position-absolute top-50 end-0 me-3 fs-5"
-                                                   type="radio" name="listGroupRadioGrid3" id="listGroupRadioGrid9"
-                                                   value="Dknow" checked>
-                                            <label class="list-group-item py-3 pe-5 bg-white"
-                                                   for="listGroupRadioGrid9">
-                                                <strong class="fw-semibold">I don't know</strong>
-                                            </label>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>*@
             </div>
             </div>
         }

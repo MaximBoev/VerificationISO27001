@@ -36,5 +36,13 @@ namespace VerificationISO27001.Controllers
             return View(tmp);
 
         }
+
+        [HttpPost]
+        public ActionResult StartFAQ(List<MQuestionData> list)
+        {
+            var tmp = list;
+            return RedirectToAction("Index", "Home");
+
+        }
     }
 }
