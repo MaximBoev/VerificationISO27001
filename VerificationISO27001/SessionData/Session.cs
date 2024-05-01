@@ -8,8 +8,9 @@ namespace VerificationISO27001.SessionData
 {
     public class Session
     {
-        public string CompanyName {  get; set; }
+        public MCompanyNameData CompanyName {  get; set; }
         public MListOfQuestionsData MListOfQuestions {  get; set; }
+        public MResultData ResultData { get; set; }
 
     }
 }

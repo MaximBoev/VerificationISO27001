@@ -11,9 +11,7 @@ namespace VerificationISO27001.Controllers
 {
     public class HomeController : Controller
     {
-        internal Session currentSessionData = new Session();
-        internal Service currentServiceData = new Service();
-
+        internal Service service = new Service();
         // GET: Home
         public ActionResult Index()
         {
@@ -22,46 +20,45 @@ namespace VerificationISO27001.Controllers
         }
 
         public ActionResult FAQ()
-        {
+        {   
+            
             var ListOfQuestions = new MListOfQuestionsData()
             {
                 Questions = new List<MQuestionData>(),
             };
+            service.FillQuestions(ListOfQuestions);
 
-            var tmp = new MQuestionData()
-            {
-                Id = 1,
-                Number = 1,
-                Question = "nvjndfvfd",
-                Risk = Enums.Risk.High,
-                Scored = 5
-            };
-            ListOfQuestions.Questions.Add(tmp);
-            
-            //currentServiceData.FillQuestions(ListOfQuestions);
+            var tmp = (Session)System.Web.HttpContext.Current.Session["SessionData"];
+            tmp.MListOfQuestions = ListOfQuestions;
+            System.Web.HttpContext.Current.Session["SessionData"] = tmp;
 
             return View(ListOfQuestions);
-
         }
 
         [HttpPost]
-        public ActionResult CheckFAQ(List<MQuestionData> QuestionList)
+        public ActionResult CheckFAQ(List<MQuestionData> list)
         {
-            var tmp = QuestionList;
+            service.Evaluate(list, (Session)System.Web.HttpContext.Current.Session["SessionData"]);
             return RedirectToAction("Results", "Home");
         }
 
         [HttpPost]
         public ActionResult StartFAQ(MCompanyNameData nameData)
         {
-            //currentSessionData.CompanyName = nameData.CompanyName;
+            var currentSession = new Session()
+            {
+                CompanyName = nameData
+            };
+            System.Web.HttpContext.Current.Session["SessionData"] = currentSession;
             return RedirectToAction("FAQ", "Home");
         }
 
         [HttpGet]
         public ActionResult Results()
-        {
-            return View();
+        {   
+            var tmp = (Session)System.Web.HttpContext.Current.Session["SessionData"];
+            return View(tmp);
         }
+
     }
 }

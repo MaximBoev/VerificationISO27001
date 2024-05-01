@@ -223,6 +223,7 @@
     <Compile Include="Models\MCompanyNameData.cs" />
     <Compile Include="Models\MListOfQuestionsData.cs" />
     <Compile Include="Models\MQuestionData.cs" />
+    <Compile Include="Models\MResultData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceData\Service.cs" />
     <Compile Include="SessionData\Session.cs" />
