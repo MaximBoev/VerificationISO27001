@@ -1,0 +1,200 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "FAQ";
+}
+@using System.Web.Optimization
+@model VerificationISO27001.Models.MListOfQuestionsData
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet">
+    <link href="list-groups.css" rel="stylesheet">
+
+    @Styles.Render("~/bundles/list/css")
+    @Styles.Render("~/bundles/main/css")
+
+    <title>ISO-27001</title>
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+
+        .b-example-divider {
+            width: 100%;
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .btn-bd-primary {
+            --bd-violet-bg: #712cf9;
+            --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+            --bs-btn-font-weight: 600;
+            --bs-btn-color: var(--bs-white);
+            --bs-btn-bg: var(--bd-violet-bg);
+            --bs-btn-border-color: var(--bd-violet-bg);
+            --bs-btn-hover-color: var(--bs-white);
+            --bs-btn-hover-bg: #6528e0;
+            --bs-btn-hover-border-color: #6528e0;
+            --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+            --bs-btn-active-color: var(--bs-btn-hover-color);
+            --bs-btn-active-bg: #5a23c8;
+            --bs-btn-active-border-color: #5a23c8;
+        }
+
+        .bd-mode-toggle {
+            z-index: 1500;
+        }
+
+        .bd-mode-toggle .dropdown-menu .active .bi {
+            display: block !important;
+        }
+    </style>
+</head>
+
+<body class="my-bg-color1">
+    <div class="container mt-5 ml-5">
+        <p class="h1 text-white">Verification of ISO-27001</p>
+    </div>
+    <div class="container">
+        @using (Html.BeginForm("StartFAQ", "Home", FormMethod.Post, new { autocomplete = "off" }))
+        {
+            <div class="d-flex">
+                <div class="p-5 flex-shrink-0">
+                    <ul class="list-unstyled">
+                        <li><button type="button" class="btn text-primary-hover yes">Select all YES</button></li>
+                        <li><button type="button" class="btn text-primary-hover no">Select all NO</button></li>
+                        <li><button type="reset" class="btn text-primary-hover">Reset</button></li>
+                    </ul>
+                    <button type="submit" class="btn btn-primary text-white">Check results</button>
+                </div>
+                @{int i = 1;
+                }
+                 
+            <div class="p-5 text-white flex-grow-1">
+                @for (var j=0; j<Model.Questions.Count;j++)
+                {
+                    <div class="accordion mb-2 accordion-flush" id="accordionExample">
+                        <div class="accordion-item my-bg-color2 text-white">
+                            @{ var str1 = "heading" + i.ToString();}
+                            @{ var str2 = "#collapse" + i.ToString();}
+                            @{ var str3 = "collapse" + i.ToString();}
+                            @{ var str4 = "listGroupRadioGrid" + i.ToString();}
+                            <h2 class="accordion-header" id=@str1>
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target=@str2 aria-expanded="false" aria-controls=@str3>
+                                    Question @Model.Questions[j].Number
+                                </button>
+                            </h2>
+                            <input type="number" name="@($"list[{j}].Id")" class="form-control" style="display: none;" value="@Model.Questions[j].Id" readonly>
+                            <div id=@str3 class="accordion-collapse collapse" aria-labelledby=@str1
+                                 data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <p>
+                                        @Model.Questions[j].Question
+                                    </p>
+                                    <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
+                                        <div class="list-group list-group-radio d-flex gap-2 border-0">
+
+                                            <div class="position-relative">
+                                                <input class="form-check-input position-absolute top-50 end-0 me-3 fs-5"
+                                                       type="radio" name="@($"list[{j}].Answer")" id=@str4
+                                                       value="Yes">
+                                                <label class="list-group-item py-3 pe-5 bg-white"
+                                                       for=@str4>
+                                                    <strong class="fw-semibold">Yes</strong>
+                                                </label>
+                                            </div>
+                                            @{i++; }
+                                            @{str4 = "listGroupRadioGrid" + i.ToString();}
+                                            <div class="position-relative">
+                                                <input class="form-check-input position-absolute top-50 end-0 me-3 fs-5"
+                                                       type="radio" name="@($"list[{j}].Answer")" id=@str4
+                                                       value="No">
+                                                <label class="list-group-item py-3 pe-5 bg-white"
+                                                       for=@str4>
+                                                    <strong class="fw-semibold">No</strong>
+                                                </label>
+                                            </div>
+                                            @{i++; }
+                                            @{str4 = "listGroupRadioGrid" + i.ToString();}
+                                            <div class="position-relative">
+                                                <input class="form-check-input position-absolute top-50 end-0 me-3 fs-5"
+                                                       type="radio" name="@($"list[{j}].Answer")" id=@str4
+                                                       value="Dknow" checked>
+                                                <label class="list-group-item py-3 pe-5 bg-white"
+                                                       for=@str4>
+                                                    <strong class="fw-semibold">I don't know</strong>
+                                                </label>
+                                            </div>
+                                            @{i++; }
+                                            @{str4 = "listGroupRadioGrid" + i.ToString();}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            }
+
+
+            </div>
+            </div>
+        }
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"></script>
+
+    @Scripts.Render("~/bundles/script/js")
+
+</body>
+
+</html>
+
+
