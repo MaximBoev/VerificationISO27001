@@ -38,7 +38,7 @@ namespace VerificationISO27001.Controllers
         }
 
         [HttpPost]
-        public ActionResult StartFAQ(List<MQuestionData> list)
+        public ActionResult CheckFAQ(List<MQuestionData> list)
         {
             var tmp = list;
             return RedirectToAction("Index", "Home");
