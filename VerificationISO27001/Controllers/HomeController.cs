@@ -44,5 +44,11 @@ namespace VerificationISO27001.Controllers
             return RedirectToAction("Index", "Home");
 
         }
+
+        [HttpGet]
+        public ActionResult Results()
+        {
+            return View();
+        }
     }
 }
