@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using VerificationISO27001.Enums;
 
 namespace VerificationISO27001.Models
 {
@@ -11,5 +12,8 @@ namespace VerificationISO27001.Models
         public int Number {  get; set; } 
         public string Question {  get; set; }
         public string Answer { get; set; }
+        public string CorrectAnswer { get; set; }
+        public Risk Risk { get; set; }
+        public int Scored {  get; set; }
     }
 }
