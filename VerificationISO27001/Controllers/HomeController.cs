@@ -27,6 +27,7 @@ namespace VerificationISO27001.Controllers
                 Questions = new List<MQuestionData>(),
             };
             service.FillQuestions(ListOfQuestions);
+            service.RandomQuestion(ListOfQuestions);
 
             var tmp = (Session)System.Web.HttpContext.Current.Session["SessionData"];
             tmp.MListOfQuestions = ListOfQuestions;

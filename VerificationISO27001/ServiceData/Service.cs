@@ -376,6 +376,22 @@ namespace VerificationISO27001.ServiceData
                 Scored = 5
             });
         }
-
+        public void RandomQuestion(MListOfQuestionsData mListOfQuestionsData)
+        {
+            var random = new Random();
+            int rd = 0;
+            for(int i = 0; i< mListOfQuestionsData.Questions.Count; i++)
+            {
+                rd = random.Next(0, mListOfQuestionsData.Questions.Count - 1);
+                var tmp = mListOfQuestionsData.Questions[i];
+                mListOfQuestionsData.Questions[i] = mListOfQuestionsData.Questions[rd];
+                mListOfQuestionsData.Questions[rd] = tmp;
+            }
+            for(int i = 0; i < mListOfQuestionsData.Questions.Count; ++i)
+            {
+                mListOfQuestionsData.Questions[i].Id = i+1;
+                mListOfQuestionsData.Questions[i].Number = i+1;
+            }
+        }
     }
 }
