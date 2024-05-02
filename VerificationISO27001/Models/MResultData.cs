@@ -9,5 +9,8 @@ namespace VerificationISO27001.Models
     {
         public bool Success { get; set; }
         public float correctness {  get; set; }
+        public int scoreOfHighRisk { get; set; }
+        public int scoreOfMediumRisk { get; set; }
+        public int scoreOfAcceptableRisk { get; set; }
     }
 }

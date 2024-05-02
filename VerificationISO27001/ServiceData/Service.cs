@@ -23,6 +23,21 @@ namespace VerificationISO27001.ServiceData
                 if (currentSession.MListOfQuestions.Questions[i].CorrectAnswer ==
                     currentSession.MListOfQuestions.Questions[i].Answer)
                     numberOfPoints = numberOfPoints + currentSession.MListOfQuestions.Questions[i].Scored;
+                else
+                {
+                    if (currentSession.MListOfQuestions.Questions[i].Risk == Enums.Risk.Acceptable)
+                    {
+                        currentSession.ResultData.scoreOfAcceptableRisk += currentSession.MListOfQuestions.Questions[i].Scored;
+                    }
+                    else if(currentSession.MListOfQuestions.Questions[i].Risk == Enums.Risk.Medium)
+                    {
+                        currentSession.ResultData.scoreOfMediumRisk += currentSession.MListOfQuestions.Questions[i].Scored;
+                    }
+                    else
+                    {
+                        currentSession.ResultData.scoreOfHighRisk += currentSession.MListOfQuestions.Questions[i].Scored;
+                    }
+                }
             }
             currentSession.ResultData.correctness = 100 * (numberOfPoints / totalPoints);
             if (currentSession.ResultData.correctness > 65)
