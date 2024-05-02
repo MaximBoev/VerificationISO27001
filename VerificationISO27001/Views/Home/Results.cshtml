@@ -4,7 +4,7 @@
     ViewBag.Title = "Results";
 }
 @using System.Web.Optimization
-@*@model VerificationISO27001.Models.MListOfQuestionsData*@
+@model VerificationISO27001.SessionData.Session
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,8 +30,12 @@
         <canvas id="myChart" style="width:100%;max-width:800px"></canvas>
     </div>
     <div class="container mt-5">
-        <p class="h3 text-white">Verification of ISO-27001 was <span class="text-danger">failed</span></p>
-        <p class="h3 text-white">Your company meets the standard at <span class="text-danger">30%</span></p>
+        <p class="h3 text-white">Verification of ISO-27001 for company @Model.CompanyName.CompanyName was @if (Model.ResultData.Success) {<span class="text-success">successful</span> } else {<span class="text-danger">failed</span> }</p>
+        <p class="h3 text-white">Your company meets the standard at @if (Model.ResultData.correctness < 90)
+        {<span class="text-danger">@Model.ResultData.correctness%</span> }
+        else if (Model.ResultData.correctness <= 95 && Model.ResultData.correctness >= 90)
+        {<span class="text-warning">@Model.ResultData.correctness%</span> }
+        else {<span class="text-success">@Model.ResultData.correctness%</span> }</p>
     </div>
     <div class="container mt-5">
         <p class="h2 text-white">Your Results</p>
@@ -46,26 +50,20 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach (var question in Model.MListOfQuestions.Questions)
+                {
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>mdo</td>
-                    <td>mdo</td>
+                    <th scope="row">@question.Number</th>
+                    <td class="col-6">@question.Question</td>
+                    <td>@if (question.Risk == VerificationISO27001.Enums.Risk.Acceptable)
+                    {<span class="text-success">@question.Risk.ToString()</span> }
+                    else if (question.Risk == VerificationISO27001.Enums.Risk.Medium)
+                    {<span class="text-warning">@question.Risk.ToString()</span> }
+                    else {<span class="text-danger">@question.Risk.ToString()</span> }</td>
+                    <td>@question.Answer</td>
+                    <td>@question.Scored</td>
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>fat</td>
-                    <td>mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>twitter</td>
-                    <td>mdo</td>
-                </tr>
+                }
             </tbody>
         </table>
     </div>
@@ -74,12 +72,23 @@
     </div>
 
     <script>
-        var xValues = ["High", "Lower", "Acceptable"];
-        var yValues = [55, 49, 44];
+        var noRisk=0;
+        var highRisk = @Model.ResultData.scoreOfHighRisk;
+        var lowerRisk = @Model.ResultData.scoreOfMediumRisk;
+        var acceptableRisk = @Model.ResultData.scoreOfAcceptableRisk;
+        if(highRisk==0 && lowerRisk==0 && acceptableRisk==0){
+            noRisk=1;
+            highRisk=0;
+            lowerRisk=0;
+            acceptableRisk=0;
+        }
+        var xValues = ["High", "Lower", "Acceptable", "No risks"];
+        var yValues = [highRisk, lowerRisk, acceptableRisk, noRisk];
         var barColors = [
             "#e73741",
             "#fdc803",
-            "#7db82b"
+            "#7db82b",
+            "#3cbfce"
         ];
 
         new Chart("myChart", {

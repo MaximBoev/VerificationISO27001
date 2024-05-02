@@ -40,7 +40,7 @@ namespace VerificationISO27001.ServiceData
                 }
             }
             currentSession.ResultData.correctness = 100 * (numberOfPoints / totalPoints);
-            if (currentSession.ResultData.correctness > 65)
+            if (currentSession.ResultData.correctness > 90)
             {
                 currentSession.ResultData.Success = true;
             }
